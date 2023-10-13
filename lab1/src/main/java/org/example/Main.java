@@ -21,6 +21,7 @@ public class Main {
 
         // 4
 
+
         int numberToCheck = 25; // Zmiennej "numberToCheck" przypisujemy liczbę do sprawdzenia
 
         if (isPrime(numberToCheck)) {
@@ -43,5 +44,6 @@ public class Main {
 
         return true; // Jeśli żadna inna liczba nie podzieli liczby, to jest liczbą pierwszą
     }
+    
 }
 
