@@ -30,7 +30,7 @@ public class Main {
                 break;
             } else {
                 System.out.println("To nie jest prawidłowa wartość. Wprowadź liczbę.");
-                scanner.next(); // Wczytaj nieprawidłową wartość
+                scanner.next();
             }
         }
 

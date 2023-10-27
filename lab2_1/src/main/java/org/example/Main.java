@@ -1,3 +1,4 @@
+package org.example;
 import java.util.Scanner;
 
 public class Main {
@@ -24,6 +25,7 @@ public class Main {
             return false;
         }
 
+        // Metoda sqrt() do znajdowania pierwiastka kwadratowego liczby
         for (int i = 2; i <= Math.sqrt(number); i++) {
             if (number % i == 0) {
                 return false;
