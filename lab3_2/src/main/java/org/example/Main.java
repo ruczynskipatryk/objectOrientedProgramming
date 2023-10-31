@@ -1,3 +1,7 @@
+package org.example;
+
+import java.util.Scanner;
+
 class Sphere {
     private double radius;
 
@@ -5,89 +9,94 @@ class Sphere {
         this.radius = radius;
     }
 
-    // Metoda obliczająca pole powierzchni kuli
     public double calculateSurfaceArea() {
         return 4 * Math.PI * radius * radius;
     }
 
-    // Metoda sprawdzająca, czy dana bryła mieści się w sferze
-    public boolean isContainedInSphere(Body body) {
-        // Oblicz odległość od środka kuli do środka bryły
-        double distance = Math.sqrt(Math.pow(this.radius - body.getX(), 2) +
-                Math.pow(this.radius - body.getY(), 2) +
-                Math.pow(this.radius - body.getZ(), 2));
+    public boolean contains(Tetrahedron shape) {
+        // Sprawdź, czy środek czworościanu jest wewnątrz sfery
+        double centerX = shape.getCenterX();
+        double centerY = shape.getCenterY();
+        double centerZ = shape.getCenterZ();
 
-        // Sprawdź, czy odległość jest mniejsza lub równa promieniowi kuli
-        return distance <= this.radius;
+        double distance = Math.sqrt(
+                (centerX * centerX) +
+                        (centerY * centerY) +
+                        (centerZ * centerZ)
+        );
+
+        return distance + shape.getMaxDimension() <= radius;
     }
 }
 
 class Tetrahedron {
-    private double sideLength;
+    private double edgeLength;
 
-    public Tetrahedron(double sideLength) {
-        this.sideLength = sideLength;
+    public Tetrahedron(double edgeLength) {
+        this.edgeLength = edgeLength;
     }
 
-    // Metoda obliczająca pole powierzchni czworościanu
     public double calculateSurfaceArea() {
-        return Math.sqrt(3) * sideLength * sideLength;
+        return Math.sqrt(3) * edgeLength * edgeLength;
     }
 
-    // Metoda sprawdzająca, czy dana bryła mieści się w sferze
-    public boolean isContainedInSphere(Sphere sphere) {
-        // Oblicz odległość od środka czworościanu do środka sfery
-        double distance = Math.sqrt(Math.pow(sphere.getX(), 2) +
-                Math.pow(sphere.getY(), 2) +
-                Math.pow(sphere.getZ(), 2));
+    public boolean contains(Shape3D shape) {
+        // Własna implementacja - do zaimplementowania
+        return false;
+    }
 
-        // Sprawdź, czy odległość jest mniejsza lub równa promieniowi sfery
-        return distance <= sphere.getRadius();
+    public double getCenterX() {
+        // Własna implementacja - do zaimplementowania
+        return 0;
+    }
+
+    public double getCenterY() {
+        // Własna implementacja - do zaimplementowania
+        return 0;
+    }
+
+    public double getCenterZ() {
+        // Własna implementacja - do zaimplementowania
+        return 0;
+    }
+
+    public double getMaxDimension() {
+        // Własna implementacja - do zaimplementowania
+        return 0;
     }
 }
 
-class Body {
-    private double x, y, z;
-
-    public Body(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getZ() {
-        return z;
-    }
+interface Shape3D {
+    double calculateSurfaceArea();
+    double getCenterX();
+    double getCenterY();
+    double getCenterZ();
+    double getMaxDimension();
 }
 
 public class Main {
     public static void main(String[] args) {
-        // Tworzenie sfery i czworościanu
-        Sphere sphere = new Sphere(5.0);
-        Tetrahedron tetrahedron = new Tetrahedron(4.0);
+        Scanner scanner = new Scanner(System.in);
 
-        // Obliczanie pól powierzchni brył
-        double sphereSurfaceArea = sphere.calculateSurfaceArea();
-        double tetrahedronSurfaceArea = tetrahedron.calculateSurfaceArea();
+        // Wprowadzanie parametrów sfery
+        System.out.print("Podaj promień sfery: ");
+        double sphereRadius = scanner.nextDouble();
+        Sphere sphere = new Sphere(sphereRadius);
 
-        System.out.println("Powierzchnia sfery: " + sphereSurfaceArea);
-        System.out.println("Powierzchnia czworościanu: " + tetrahedronSurfaceArea);
+        // Wprowadzanie parametrów czworościanu
+        System.out.print("Podaj długość krawędzi czworościanu: ");
+        double tetrahedronEdgeLength = scanner.nextDouble();
+        Tetrahedron tetrahedron = new Tetrahedron(tetrahedronEdgeLength);
 
-        // Sprawdzenie, czy czworościan mieści się w sferze
-        boolean isTetrahedronInSphere = tetrahedron.isContainedInSphere(sphere);
-
+        // Test, czy czworościan mieści się w sferze
+        boolean isTetrahedronInSphere = sphere.contains(tetrahedron);
         if (isTetrahedronInSphere) {
             System.out.println("Czworościan mieści się w sferze.");
         } else {
             System.out.println("Czworościan nie mieści się w sferze.");
         }
+
+
+        scanner.close();
     }
 }
