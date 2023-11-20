@@ -1,11 +1,11 @@
 package org.example;
 
 public class Bear extends Predator {
-    private int requiredFood; // Minimalna ilość jedzenia, aby niedźwiedź pozostał żywy
-    private int currentFoodEaten; // Aktualna ilość zjedzonego jedzenia
+    private int requiredFood;
+    private int currentFoodEaten;
 
-    public Bear(boolean alive, int requiredFood) {
-        super(alive);
+    public Bear(boolean alive, double weight, int requiredFood) {
+        super(alive, weight);
         this.requiredFood = requiredFood;
         this.currentFoodEaten = 0;
     }
@@ -18,11 +18,16 @@ public class Bear extends Predator {
         this.requiredFood = requiredFood;
     }
 
-    public void eatFood(int foodAmount) {
-        currentFoodEaten += foodAmount;
-        if (currentFoodEaten >= requiredFood) {
-            setAlive(true); // Niedźwiedź zjada wystarczającą ilość jedzenia, aby pozostać żywy
-        } else {
-            setAlive(false); // Niedźwiedź nie zjadł wystarczającej porcji
+    public int getFoodEaten() {
+        return this.currentFoodEaten; // Zwraca ilość zjedzonego jedzenia przez niedźwiedzia
+    }
 
-        }}}
+    public void eatFood(int foodAmount) {
+        this.currentFoodEaten += foodAmount;
+        if (this.currentFoodEaten >= this.requiredFood) {
+            this.isAlive = true; // Niedźwiedź zjadł wystarczającą ilość jedzenia, aby pozostać żywy
+        } else {
+            this.isAlive = false; // Niedźwiedź nie zjadł wystarczającej porcji
+        }
+    }
+}

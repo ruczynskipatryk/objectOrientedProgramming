@@ -1,18 +1,23 @@
 package org.example;
 
-public class Cow extends Animal {
+class Cow extends Animal {
+    private boolean isAlive;
     private int weight;
 
-    public Cow(boolean alive, int weight) {
-        super(alive);
+    public Cow(int weight) {
+        this.isAlive = true;
         this.weight = weight;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 
     public int getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void kill() {
+        this.isAlive = false;
     }
 }
